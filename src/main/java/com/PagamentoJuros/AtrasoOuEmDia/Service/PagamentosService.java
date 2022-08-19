@@ -19,7 +19,7 @@ public class PagamentosService {
     public List<PagamentosModel> buscarPagamentos(){return pagamentosRepository.findAll();}
 
     public PagamentosModel pagamentoEmDia(PagamentosModel pagamentosModel, PagamentoEmDia pagamentoEmDia){
-        BigDecimal resultadoDIa = pagamentoEmDia.PagamentoDia(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
+        BigDecimal resultadoDIa = pagamentoEmDia.calculoPagamento(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
         pagamentosModel.getCodigo();
         pagamentosModel.setStatus("Pagamento_em_dia");
         pagamentosModel.getValorAPagar();
@@ -29,7 +29,7 @@ public class PagamentosService {
     }
 
     public PagamentosModel pagamentoJuros(PagamentosModel pagamentosModel, PagamentoAtrasado pagamentoAtrasado){
-        BigDecimal resultadoAtraso = pagamentoAtrasado.PagamentoAtraso(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
+        BigDecimal resultadoAtraso = pagamentoAtrasado.calculoPagamento(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
         pagamentosModel.getCodigo();
         pagamentosModel.setStatus("Pagamento_em_atraso");
         pagamentosModel.getValorAPagar();

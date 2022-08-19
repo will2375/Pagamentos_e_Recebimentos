@@ -2,10 +2,12 @@ package com.PagamentoJuros.AtrasoOuEmDia.Model.FormasPagamento;
 
 import java.math.BigDecimal;
 
-public class PagamentoAtrasado {
+public class PagamentoAtrasado implements Pagamentos {
 
-    public BigDecimal PagamentoAtraso(BigDecimal valor, BigDecimal juros){
-        BigDecimal resultadoAtraso = valor.add(juros);
+
+    @Override
+    public BigDecimal calculoPagamento(BigDecimal valor, BigDecimal diferencial) {
+        BigDecimal resultadoAtraso = valor.add(diferencial);
         return resultadoAtraso;
-}
     }
+}

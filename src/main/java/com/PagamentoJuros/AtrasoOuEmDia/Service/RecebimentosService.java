@@ -30,8 +30,8 @@ public class RecebimentosService {
         return recebimentosRepository.save(recebimentosModel);
     }
     public RecebimentosModel cadastrarRecebimentoDebito(RecebimentosModel recebimentosModel, Debito debito){
-        BigDecimal descontoDebito = debito.recebimentoDebito(recebimentosModel.getValorAReceber());
-        BigDecimal resultadoDebito = debito.descontoDebito(recebimentosModel.getValorAReceber(),descontoDebito);
+        BigDecimal descontoDebito = debito.calcularDesconto(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoDebito = debito.calculoFinal(recebimentosModel.getValorAReceber(),descontoDebito);
         recebimentosModel.getCodigo();
         recebimentosModel.setStatus("Pagamento_em_Debito");
         recebimentosModel.getValorAReceber();
@@ -41,8 +41,8 @@ public class RecebimentosService {
     }
 
     public RecebimentosModel cadastrarRecebimentoCredito(RecebimentosModel recebimentosModel, Credito credito){
-        BigDecimal descontoCredito = credito.recebimentoCredito(recebimentosModel.getValorAReceber());
-        BigDecimal resultadoCredito = credito.descontocredito(recebimentosModel.getValorAReceber(),descontoCredito);
+        BigDecimal descontoCredito = credito.calcularDesconto(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoCredito = credito.calculoFinal(recebimentosModel.getValorAReceber(),descontoCredito);
         recebimentosModel.getCodigo();
         recebimentosModel.setStatus("Pagamento_em_Credito");
         recebimentosModel.getValorAReceber();
@@ -52,8 +52,8 @@ public class RecebimentosService {
     }
 
     public RecebimentosModel cadastrarRecebimentoVr(RecebimentosModel recebimentosModel, ValeRefeicao valeRefeicao){
-        BigDecimal descontoVr = valeRefeicao.recebimentoVr(recebimentosModel.getValorAReceber());
-        BigDecimal resultadoVr = valeRefeicao.descontoVr(recebimentosModel.getValorAReceber(),descontoVr);
+        BigDecimal descontoVr = valeRefeicao.calcularDesconto(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoVr = valeRefeicao.calculoFinal(recebimentosModel.getValorAReceber(),descontoVr);
         recebimentosModel.getCodigo();
         recebimentosModel.setStatus("Pagamento_em_vale_refeição");
         recebimentosModel.getValorAReceber();
