@@ -23,42 +23,42 @@ public class RecebimentosService {
 
     public RecebimentosModel cadastrarRecebimentoDinheiro(RecebimentosModel recebimentosModel) {
         recebimentosModel.getCodigo();
-        recebimentosModel.setStatus("Pagamento_em_Dinheiro_pix_cheque");
-        recebimentosModel.getValorAPagar();
+        recebimentosModel.setStatus("Pagamento_em_Dinheiro");
+        recebimentosModel.getValorAReceber();
         recebimentosModel.setDiferencaValor(new BigDecimal("0"));
-        recebimentosModel.setValorPago(recebimentosModel.getValorAPagar());
+        recebimentosModel.setValorRecebido(recebimentosModel.getValorAReceber());
         return recebimentosRepository.save(recebimentosModel);
     }
     public RecebimentosModel cadastrarRecebimentoDebito(RecebimentosModel recebimentosModel, Debito debito){
-        BigDecimal descontoDebito = debito.recebimentoDebito(recebimentosModel.getValorAPagar());
-        BigDecimal resultadoDebito = debito.descontoDebito(recebimentosModel.getValorAPagar(),descontoDebito);
+        BigDecimal descontoDebito = debito.recebimentoDebito(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoDebito = debito.descontoDebito(recebimentosModel.getValorAReceber(),descontoDebito);
         recebimentosModel.getCodigo();
         recebimentosModel.setStatus("Pagamento_em_Debito");
-        recebimentosModel.getValorAPagar();
+        recebimentosModel.getValorAReceber();
         recebimentosModel.setDiferencaValor(descontoDebito);
-        recebimentosModel.setValorPago(resultadoDebito);
+        recebimentosModel.setValorRecebido(resultadoDebito);
         return recebimentosRepository.save(recebimentosModel);
     }
 
     public RecebimentosModel cadastrarRecebimentoCredito(RecebimentosModel recebimentosModel, Credito credito){
-        BigDecimal descontoCredito = credito.recebimentoCredito(recebimentosModel.getValorAPagar());
-        BigDecimal resultadoCredito = credito.descontocredito(recebimentosModel.getValorAPagar(),descontoCredito);
+        BigDecimal descontoCredito = credito.recebimentoCredito(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoCredito = credito.descontocredito(recebimentosModel.getValorAReceber(),descontoCredito);
         recebimentosModel.getCodigo();
         recebimentosModel.setStatus("Pagamento_em_Credito");
-        recebimentosModel.getValorAPagar();
+        recebimentosModel.getValorAReceber();
         recebimentosModel.setDiferencaValor(descontoCredito);
-        recebimentosModel.setValorPago(resultadoCredito);
+        recebimentosModel.setValorRecebido(resultadoCredito);
         return recebimentosRepository.save(recebimentosModel);
     }
 
     public RecebimentosModel cadastrarRecebimentoVr(RecebimentosModel recebimentosModel, ValeRefeicao valeRefeicao){
-        BigDecimal descontoVr = valeRefeicao.recebimentoVr(recebimentosModel.getValorAPagar());
-        BigDecimal resultadoVr = valeRefeicao.descontoVr(recebimentosModel.getValorAPagar(),descontoVr);
+        BigDecimal descontoVr = valeRefeicao.recebimentoVr(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoVr = valeRefeicao.descontoVr(recebimentosModel.getValorAReceber(),descontoVr);
         recebimentosModel.getCodigo();
         recebimentosModel.setStatus("Pagamento_em_vale_refeição");
-        recebimentosModel.getValorAPagar();
+        recebimentosModel.getValorAReceber();
         recebimentosModel.setDiferencaValor(descontoVr);
-        recebimentosModel.setValorPago(resultadoVr);
+        recebimentosModel.setValorRecebido(resultadoVr);
         return recebimentosRepository.save(recebimentosModel);
     }
 }

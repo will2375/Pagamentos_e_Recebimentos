@@ -16,9 +16,9 @@ public class RecebimentosModel {
     @Column(length = 50,nullable = false)
     private String status;
     @Column(length = 10, nullable = false)
-    private BigDecimal valorAPagar;
+    private BigDecimal valorAReceber;
     @Column(length = 10, nullable = false)
     private BigDecimal diferencaValor;
     @Column(length = 10, nullable = false)
-    private BigDecimal valorPago;
+    private BigDecimal valorRecebido;
 }
