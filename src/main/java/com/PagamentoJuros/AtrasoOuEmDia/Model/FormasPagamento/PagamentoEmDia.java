@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class PagamentoEmDia implements Pagamentos {
 
     @Override
-    public BigDecimal calculoPagamento(BigDecimal valor, BigDecimal diferencial) {
-        BigDecimal resultado = valor.subtract(diferencial);
-        return resultado;
+    public BigDecimal calculoPagamento(BigDecimal valorAPagar, BigDecimal diferenca) {
+        BigDecimal resultadoPagamentoEmDia = valorAPagar.subtract(diferenca);
+        return resultadoPagamentoEmDia;
     }
 }

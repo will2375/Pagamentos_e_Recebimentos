@@ -4,10 +4,9 @@ import java.math.BigDecimal;
 
 public class PagamentoAtrasado implements Pagamentos {
 
-
     @Override
-    public BigDecimal calculoPagamento(BigDecimal valor, BigDecimal diferencial) {
-        BigDecimal resultadoAtraso = valor.add(diferencial);
+    public BigDecimal calculoPagamento(BigDecimal valorAPagar, BigDecimal diferenca) {
+        BigDecimal resultadoAtraso = valorAPagar.add(diferenca);
         return resultadoAtraso;
     }
 }

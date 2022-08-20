@@ -2,6 +2,7 @@ package com.PagamentoJuros.AtrasoOuEmDia.Service;
 
 import com.PagamentoJuros.AtrasoOuEmDia.Model.FormasPagamento.PagamentoAtrasado;
 import com.PagamentoJuros.AtrasoOuEmDia.Model.FormasPagamento.PagamentoEmDia;
+import com.PagamentoJuros.AtrasoOuEmDia.Model.FormasPagamento.PagamentosFactory;
 import com.PagamentoJuros.AtrasoOuEmDia.Model.PagamentosModel;
 import com.PagamentoJuros.AtrasoOuEmDia.Repository.PagamentosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +19,20 @@ public class PagamentosService {
 
     public List<PagamentosModel> buscarPagamentos(){return pagamentosRepository.findAll();}
 
-    public PagamentosModel pagamentoEmDia(PagamentosModel pagamentosModel, PagamentoEmDia pagamentoEmDia){
-        BigDecimal resultadoDIa = pagamentoEmDia.calculoPagamento(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
+    public PagamentosModel pagamentoEmDia(PagamentosModel pagamentosModel, PagamentosFactory pagamentosFactory){
+        BigDecimal resultado = pagamentosFactory.getCalculoPagamento(pagamentosModel.getStatus()).calculoPagamento(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
         pagamentosModel.getCodigo();
-        pagamentosModel.setStatus("Pagamento_em_dia");
+        pagamentosModel.getStatus();
         pagamentosModel.getValorAPagar();
         pagamentosModel.getDiferencaValor();
-        pagamentosModel.setValorPago(resultadoDIa);
+        pagamentosModel.setValorPago(resultado);
         return pagamentosRepository.save(pagamentosModel);
     }
 
-    public PagamentosModel pagamentoJuros(PagamentosModel pagamentosModel, PagamentoAtrasado pagamentoAtrasado){
-        BigDecimal resultadoAtraso = pagamentoAtrasado.calculoPagamento(pagamentosModel.getValorAPagar(), pagamentosModel.getDiferencaValor());
+    public PagamentosModel pagamentoJuros(PagamentosModel pagamentosModel, PagamentosFactory pagamentosFactory){
+        BigDecimal resultadoAtraso = pagamentosFactory.getCalculoPagamento(pagamentosModel.getStatus()).calculoPagamento(pagamentosModel.getValorAPagar(),pagamentosModel.getDiferencaValor());
         pagamentosModel.getCodigo();
-        pagamentosModel.setStatus("Pagamento_em_atraso");
+        pagamentosModel.getStatus();
         pagamentosModel.getValorAPagar();
         pagamentosModel.getDiferencaValor();
         pagamentosModel.setValorPago(resultadoAtraso);

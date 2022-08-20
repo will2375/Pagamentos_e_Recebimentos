@@ -1,8 +1,7 @@
 package com.PagamentoJuros.AtrasoOuEmDia.Service;
 
-import com.PagamentoJuros.AtrasoOuEmDia.Model.Recebimentos.Credito;
-import com.PagamentoJuros.AtrasoOuEmDia.Model.Recebimentos.Debito;
-import com.PagamentoJuros.AtrasoOuEmDia.Model.Recebimentos.ValeRefeicao;
+import com.PagamentoJuros.AtrasoOuEmDia.Model.Recebimentos.RecebimentosFactory;
+
 import com.PagamentoJuros.AtrasoOuEmDia.Model.RecebimentosModel;
 import com.PagamentoJuros.AtrasoOuEmDia.Repository.RecebimentosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,44 +20,14 @@ public class RecebimentosService {
         return recebimentosRepository.findAll();
     }
 
-    public RecebimentosModel cadastrarRecebimentoDinheiro(RecebimentosModel recebimentosModel) {
+    public RecebimentosModel cadastrarRecebimento(RecebimentosModel recebimentosModel, RecebimentosFactory recebimentosFactory) {
+        BigDecimal resultado = recebimentosFactory.getCalculoRecebimento(recebimentosModel.getStatus()).calcularDesconto(recebimentosModel.getValorAReceber());
+        BigDecimal resultadoFinal = recebimentosModel.getValorAReceber().subtract(resultado);
         recebimentosModel.getCodigo();
-        recebimentosModel.setStatus("Pagamento_em_Dinheiro");
+        recebimentosModel.getStatus();
         recebimentosModel.getValorAReceber();
-        recebimentosModel.setDiferencaValor(new BigDecimal("0"));
-        recebimentosModel.setValorRecebido(recebimentosModel.getValorAReceber());
-        return recebimentosRepository.save(recebimentosModel);
-    }
-    public RecebimentosModel cadastrarRecebimentoDebito(RecebimentosModel recebimentosModel, Debito debito){
-        BigDecimal descontoDebito = debito.calcularDesconto(recebimentosModel.getValorAReceber());
-        BigDecimal resultadoDebito = debito.calculoFinal(recebimentosModel.getValorAReceber(),descontoDebito);
-        recebimentosModel.getCodigo();
-        recebimentosModel.setStatus("Pagamento_em_Debito");
-        recebimentosModel.getValorAReceber();
-        recebimentosModel.setDiferencaValor(descontoDebito);
-        recebimentosModel.setValorRecebido(resultadoDebito);
-        return recebimentosRepository.save(recebimentosModel);
-    }
-
-    public RecebimentosModel cadastrarRecebimentoCredito(RecebimentosModel recebimentosModel, Credito credito){
-        BigDecimal descontoCredito = credito.calcularDesconto(recebimentosModel.getValorAReceber());
-        BigDecimal resultadoCredito = credito.calculoFinal(recebimentosModel.getValorAReceber(),descontoCredito);
-        recebimentosModel.getCodigo();
-        recebimentosModel.setStatus("Pagamento_em_Credito");
-        recebimentosModel.getValorAReceber();
-        recebimentosModel.setDiferencaValor(descontoCredito);
-        recebimentosModel.setValorRecebido(resultadoCredito);
-        return recebimentosRepository.save(recebimentosModel);
-    }
-
-    public RecebimentosModel cadastrarRecebimentoVr(RecebimentosModel recebimentosModel, ValeRefeicao valeRefeicao){
-        BigDecimal descontoVr = valeRefeicao.calcularDesconto(recebimentosModel.getValorAReceber());
-        BigDecimal resultadoVr = valeRefeicao.calculoFinal(recebimentosModel.getValorAReceber(),descontoVr);
-        recebimentosModel.getCodigo();
-        recebimentosModel.setStatus("Pagamento_em_vale_refeição");
-        recebimentosModel.getValorAReceber();
-        recebimentosModel.setDiferencaValor(descontoVr);
-        recebimentosModel.setValorRecebido(resultadoVr);
+        recebimentosModel.setDiferencaValor(resultado);
+        recebimentosModel.setValorRecebido(resultadoFinal);
         return recebimentosRepository.save(recebimentosModel);
     }
 }
