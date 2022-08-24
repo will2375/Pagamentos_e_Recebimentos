@@ -20,6 +20,10 @@ public class RecebimentosService {
         return recebimentosRepository.findAll();
     }
 
+    public List<RecebimentosModel> findyRecebimentos (String status){
+        return recebimentosRepository.findByStatus(status);
+    }
+
     public RecebimentosModel cadastrarRecebimento(RecebimentosModel recebimentosModel, RecebimentosFactory recebimentosFactory) {
         BigDecimal resultado = recebimentosFactory.getCalculoRecebimento(recebimentosModel.getStatus()).calcularDesconto(recebimentosModel.getValorAReceber());
         BigDecimal resultadoFinal = recebimentosModel.getValorAReceber().subtract(resultado);

@@ -23,6 +23,11 @@ public class RecebimentoController {
         return recebimentosService.listaRecebimento();
     }
 
+    @GetMapping(path = "/recebimentos/forma/{status}")
+    public List<RecebimentosModel> findBystatusRecebimento (@PathVariable String status){
+        return recebimentosService.findyRecebimentos(status);
+    }
+
     @PostMapping(path = "/recebimentos")
     @ResponseStatus(HttpStatus.CREATED)
     public RecebimentosModel cadastrarRecebimentoDinheiro(@RequestBody RecebimentosModel recebimentosModel, RecebimentosFactory recebimentosFactory){
